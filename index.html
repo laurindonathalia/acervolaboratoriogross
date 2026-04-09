@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#004B87",
+                        "on-surface": "#1a202c",
+                        "on-surface-variant": "#4a5568",
+                        "background": "#fdfdfd",
+                        "surface": "#ffffff"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "8px",
+                        "lg": "8px",
+                    }
+                },
+            },
+        }
+    </script>
+<style>.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 20
+    }
+body {
+    font-family: "Inter", sans-serif;
+    background-color: #fdfdfd;
+    color: #1a202c
+    }
+h1, h2, h3 {
+    font-family: "Manrope", sans-serif
+    }
+select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none
+    }
+.scroll-mt-32 {
+    scroll-margin-top: 8rem
+    }
+.hero-background-modernized {
+    position: relative;
+    background-color: #fdfdfd;
+    overflow: hidden
+    }
+.hero-background-modernized::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url(https://lh3.googleusercontent.com/aida/ADBb0ui6U6mPsoJVjSAstUqeBD-8ye1zPMr4juGyy2gLO2x_errHXBkO-lVmeHUKufthhwdCMHnXoV4PsLmfVDdAfFG0cQgoIgCWwuYsPq7qH0wzpL-1th4zT_YaeIMj_6MKPdjJ-zbqXA5OIl485_mXUYsNr0IX-qu_8UmBV3G22KEJ3wRsPRFizjfK4QPlMJ8dgj2DnGyqwwdsH_mHCU9OS3ojA8U0Kx6xzzjC8vbxECBO576J8SRxmTPP3d7a9HgVaTZL3XN-N89MfWE);
+    background-size: cover;
+    background-position: center;
+    /* Removido grayscale para não deixar preto e branco */
+    filter: brightness(0.9) contrast(1.1) opacity(0.08);
+    z-index: 0
+    }
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(0, 75, 135, 0.05), transparent 100%);
+    z-index: 1
+    }
+.hero-content {
+    position: relative;
+    z-index: 2
+    }</style>
+</head>
+<body class="min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+<div class="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto">
+    <div>
+        <img src="https://cdn.prod.website-files.com/66d09af91f7a821e8941f56e/674dbfa531dc25d89113d138_logo.svg" alt="Logo Acervo Gross" style="height: 40px; width: auto;">
+    </div>
+</div>
+</nav>
+<main class="flex-grow pt-16 w-full">
+<!-- Modernized Hero Area with Background Image -->
+<div class="hero-background-modernized pt-32 pb-24 border-b border-gray-100">
+<div class="hero-overlay"></div>
+<div class="max-w-7xl mx-auto px-6 text-center hero-content">
+<div class="max-w-3xl mx-auto">
+<img src="Elementos/Ativo 12.png" alt="Logo Ativo 12" class="h-10 md:h-12 w-auto mx-auto mb-6" />
+<h1 class="text-4xl md:text-5xl font-semibold text-on-surface tracking-tight mb-8 leading-tight">
+                        Acervo Laboratório Gross
+</h1>
+<p class="text-lg text-on-surface-variant leading-relaxed mb-12 font-light max-w-2xl mx-auto">
+                        Portal institucional dedicado à preservação e consulta da memória técnica e histórica. Um repositório centralizado para o legado centenário de obras e artefatos.
+                    </p>
+<div class="flex justify-center items-center">
+<a class="group inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[0.2em] text-on-surface hover:text-primary transition-colors" href="#explorar">
+                            Navegar pela coleção
+                            <span class="material-symbols-outlined text-lg group-hover:translate-y-1 transition-transform">south</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<!-- Nuclei Presentation Section (Maintained) -->
+<div class="bg-white py-24">
+<div class="max-w-7xl mx-auto px-6">
+<div class="mb-16 text-center md:text-left">
+<h2 class="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-4">Estrutura de Organização</h2>
+<h3 class="text-3xl font-extrabold text-on-surface tracking-tight">Núcleos Temáticos</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+<!-- Nucleus 1 -->
+<div class="bg-white p-8 rounded-lg border border-gray-50 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] hover:border-primary/20 transition-all group">
+<div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center mb-6 group-hover:bg-primary transition-colors">
+<span class="material-symbols-outlined text-primary group-hover:text-white">science</span>
+</div>
+<h4 class="text-lg font-bold mb-3">Cultura Material Farmacêutica</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">Instrumentos, frascos e embalagens que narram a evolução da produção laboratorial.</p>
+</div>
+<!-- Nucleus 2 -->
+<div class="bg-white p-8 rounded-lg border border-gray-50 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] hover:border-emerald-600/20 transition-all group">
+<div class="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center mb-6 group-hover:bg-emerald-600 transition-colors">
+<span class="material-symbols-outlined text-emerald-600 group-hover:text-white">history_edu</span>
+</div>
+<h4 class="text-lg font-bold mb-3">Memória Institucional</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">Atas, registros funcionais e documentos fundadores da trajetória administrativa.</p>
+</div>
+<!-- Nucleus 3 -->
+<div class="bg-white p-8 rounded-lg border border-gray-50 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] hover:border-amber-600/20 transition-all group">
+<div class="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center mb-6 group-hover:bg-amber-600 transition-colors">
+<span class="material-symbols-outlined text-amber-600 group-hover:text-white">factory</span>
+</div>
+<h4 class="text-lg font-bold mb-3">Arqueologia Industrial</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">Maquinário original, mobiliário técnico e a evolução das plantas industriais.</p>
+</div>
+<!-- Nucleus 4 -->
+<div class="bg-white p-8 rounded-lg border border-gray-50 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.03)] hover:border-purple-600/20 transition-all group">
+<div class="w-12 h-12 rounded-full bg-purple-50 flex items-center justify-center mb-6 group-hover:bg-purple-600 transition-colors">
+<span class="material-symbols-outlined text-purple-600 group-hover:text-white">campaign</span>
+</div>
+<h4 class="text-lg font-bold mb-3">Comunicação e Imaginário</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">Publicidades históricas e a relação estética com a classe médica brasileira.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Technical Control Bar & Grid (Exploration Area) -->
+<div class="max-w-7xl mx-auto px-6 mb-24 scroll-mt-32" id="explorar">
+<div class="mb-10">
+<h3 class="text-2xl font-extrabold text-on-surface tracking-tight mb-6">Inventário Digital</h3>
+<div class="bg-white border border-gray-200 rounded-lg p-2 flex flex-col md:flex-row items-center gap-2 shadow-sm">
+<div class="relative w-full md:w-1/3">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+<span class="material-symbols-outlined text-sm">search</span>
+</span>
+<input id="search-input" class="w-full pl-9 pr-4 py-2 bg-gray-50 border-none rounded-md text-sm focus:ring-1 focus:ring-primary/20 outline-none" placeholder="Pesquisar por ID ou Palavra-chave..." type="text"/>
+</div>
+<div class="hidden md:block w-px h-6 bg-gray-200 mx-1"></div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-2 w-full flex-grow">
+<select id="nucleo-select" class="w-full bg-white border-none text-sm text-gray-600 focus:ring-0 cursor-pointer">
+<option value="">Núcleo Temático</option>
+</select>
+<select id="categoria-select" class="w-full bg-white border-none text-sm text-gray-600 focus:ring-0 cursor-pointer">
+<option value="">Categoria do Objeto</option>
+</select>
+<select id="periodo-select" class="w-full bg-white border-none text-sm text-gray-600 focus:ring-0 cursor-pointer">
+<option value="">Período Histórico</option>
+</select>
+</div>
+<button id="filter-btn" class="w-full md:w-auto bg-primary text-white text-xs font-bold uppercase tracking-widest px-8 py-2.5 rounded-md hover:bg-black transition-colors">
+                        Filtrar
+                    </button>
+</div>
+</div>
+<!-- Content Grid -->
+<div id="items-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
+</div>
+<!-- Pagination System -->
+<div class="mt-20 flex flex-col items-center border-t border-gray-100 pt-10">
+<div class="flex items-center gap-8 mb-6">
+<button id="prev-btn" class="flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 text-gray-400 hover:border-primary hover:text-primary transition-all disabled:opacity-50" disabled>
+<span class="material-symbols-outlined text-xl">chevron_left</span>
+</button>
+<div class="flex items-center gap-2 font-headline" id="page-buttons">
+<!-- Page buttons will be inserted here -->
+</div>
+<button id="next-btn" class="flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 text-gray-400 hover:border-primary hover:text-primary transition-all disabled:opacity-50" disabled>
+<span class="material-symbols-outlined text-xl">chevron_right</span>
+</button>
+</div>
+<p class="font-headline text-[11px] uppercase tracking-widest text-gray-400 font-medium" id="pagination-info">
+                    Exibindo <span class="text-primary font-bold">1-6</span> de 49 registros catalogados
+                </p>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full border-t border-gray-100 bg-white">
+<div class="flex flex-col items-center justify-center px-6 py-8 max-w-7xl mx-auto w-full">
+    <img src="https://cdn.prod.website-files.com/66d09af91f7a821e8941f56e/674dbfa531dc25d89113d138_logo.svg" alt="Logo Acervo Gross" style="height: 32px; width: auto; margin-bottom: 8px; opacity: 0.7;">
+    <div class="text-[11px] uppercase tracking-widest text-gray-400">
+        © 2026 Acervo Laboratório Gross.
+    </div>
+</div>
+</footer>
+<script>
+let allData = [];
+let filteredData = [];
+let currentPage = 1;
+let totalPages = 1;
+const itemsPerPage = 6;
+
+function normalizeText(value) {
+    return (value || '')
+        .toString()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .trim();
+}
+
+function fillSelectOptions(selectId, values, placeholder) {
+    const select = document.getElementById(selectId);
+    if (!select) return;
+    select.innerHTML = '';
+
+    const firstOption = document.createElement('option');
+    firstOption.value = '';
+    firstOption.textContent = placeholder;
+    select.appendChild(firstOption);
+
+    values.forEach(value => {
+        const option = document.createElement('option');
+        option.value = value;
+        option.textContent = value;
+        select.appendChild(option);
+    });
+}
+
+function hydrateFilters() {
+    const nucleos = [...new Set(allData.map(r => r['Núcleo temático']).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'pt-BR'));
+    const categorias = [...new Set(allData.map(r => r['Categoria']).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'pt-BR'));
+    const periodos = [...new Set(allData.map(r => r['Data / período']).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'pt-BR'));
+
+    fillSelectOptions('nucleo-select', nucleos, 'Núcleo Temático');
+    fillSelectOptions('categoria-select', categorias, 'Categoria do Objeto');
+    fillSelectOptions('periodo-select', periodos, 'Período Histórico');
+}
+
+function applyFilters() {
+    const searchValue = normalizeText(document.getElementById('search-input')?.value);
+    const nucleoValue = document.getElementById('nucleo-select')?.value || '';
+    const categoriaValue = document.getElementById('categoria-select')?.value || '';
+    const periodoValue = document.getElementById('periodo-select')?.value || '';
+
+    filteredData = allData.filter(row => {
+        const id = row['ID Registro'] || '';
+        const titulo = row['Título padronizado'] || '';
+        const nucleo = row['Núcleo temático'] || '';
+        const categoria = row['Categoria'] || '';
+        const periodo = row['Data / período'] || '';
+
+        const searchable = normalizeText(`${id} ${titulo} ${nucleo} ${categoria}`);
+        const matchesSearch = !searchValue || searchable.includes(searchValue);
+        const matchesNucleo = !nucleoValue || nucleo === nucleoValue;
+        const matchesCategoria = !categoriaValue || categoria === categoriaValue;
+        const matchesPeriodo = !periodoValue || periodo === periodoValue;
+
+        return matchesSearch && matchesNucleo && matchesCategoria && matchesPeriodo;
+    });
+
+    currentPage = 1;
+    totalPages = Math.max(1, Math.ceil(filteredData.length / itemsPerPage));
+    showPage(1);
+}
+
+function showPage(page) {
+    currentPage = page;
+    const start = (page - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    const pageData = filteredData.slice(start, end);
+    const grid = document.getElementById('items-grid');
+    grid.innerHTML = '';
+
+    if (pageData.length === 0) {
+        grid.innerHTML = '<div class="col-span-full text-center text-sm text-gray-500 py-10">Nenhum item encontrado com os filtros selecionados.</div>';
+        updatePagination();
+        return;
+    }
+
+    pageData.forEach(row => {
+        const itemDiv = document.createElement('a');
+        itemDiv.href = `detalhe.html?id=${row['ID Registro']}`;
+        itemDiv.className = 'group cursor-pointer';
+        itemDiv.innerHTML = `
+            <div class="aspect-[16/10] overflow-hidden bg-gray-100 mb-4 border border-gray-100 rounded">
+                <img alt="${row['Título padronizado']}" class="w-full h-full object-cover transition-all duration-500" src="${row['Link da imagem']}" />
+            </div>
+            <div class="flex justify-between items-baseline mb-2 border-b border-gray-100 pb-2">
+                <span class="text-[10px] font-mono text-gray-400 font-medium">${row['ID Registro']}</span>
+                <span class="text-[10px] font-bold text-gray-400">${row['Data / período']}</span>
+            </div>
+            <h3 class="text-base font-bold text-on-surface mb-1 group-hover:text-primary transition-colors">${row['Título padronizado']}</h3>
+            <div class="flex items-center gap-2">
+                <span class="text-[10px] font-semibold text-gray-500 uppercase tracking-tighter">${row['Núcleo temático']}</span>
+            </div>
+        `;
+        grid.appendChild(itemDiv);
+    });
+
+    updatePagination();
+}
+
+function updatePagination() {
+    const pageButtons = document.getElementById('page-buttons');
+    pageButtons.innerHTML = '';
+
+    if (filteredData.length > 0) {
+        for (let i = 1; i <= totalPages; i++) {
+            const btn = document.createElement('button');
+            btn.className = `w-10 h-10 flex items-center justify-center rounded-lg text-sm font-semibold transition-colors ${i === currentPage ? 'bg-primary text-white' : 'text-gray-500 hover:bg-gray-50'}`;
+            btn.textContent = i;
+            btn.addEventListener('click', () => showPage(i));
+            pageButtons.appendChild(btn);
+        }
+    }
+
+    document.getElementById('prev-btn').disabled = currentPage === 1 || filteredData.length === 0;
+    document.getElementById('next-btn').disabled = currentPage === totalPages || filteredData.length === 0;
+
+    const startItem = filteredData.length === 0 ? 0 : (currentPage - 1) * itemsPerPage + 1;
+    const endItem = filteredData.length === 0 ? 0 : Math.min(currentPage * itemsPerPage, filteredData.length);
+    document.getElementById('pagination-info').innerHTML = `Exibindo <span class="text-primary font-bold">${startItem}-${endItem}</span> de ${filteredData.length} registros catalogados`;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('LABORATÓRIO GROSS _ ACERVO.csv')
+        .then(response => response.text())
+        .then(csvText => {
+            const parsed = Papa.parse(csvText, { header: true });
+            allData = parsed.data.filter(row => row['ID Registro']);
+            filteredData = [...allData];
+            hydrateFilters();
+            totalPages = Math.max(1, Math.ceil(filteredData.length / itemsPerPage));
+            showPage(1);
+        })
+        .catch(error => console.error('Error loading CSV:', error));
+
+    document.getElementById('prev-btn').addEventListener('click', () => {
+        if (currentPage > 1) showPage(currentPage - 1);
+    });
+
+    document.getElementById('next-btn').addEventListener('click', () => {
+        if (currentPage < totalPages) showPage(currentPage + 1);
+    });
+
+    document.getElementById('filter-btn').addEventListener('click', applyFilters);
+    document.getElementById('search-input').addEventListener('input', applyFilters);
+    document.getElementById('nucleo-select').addEventListener('change', applyFilters);
+    document.getElementById('categoria-select').addEventListener('change', applyFilters);
+    document.getElementById('periodo-select').addEventListener('change', applyFilters);
+});
+</script>
+</body></html>

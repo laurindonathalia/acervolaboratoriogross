@@ -1,0 +1,303 @@
+<!DOCTYPE html><html lang="pt-BR"><head></head><body class="bg-surface font-body text-on-surface">
+
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500&amp;display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-background": "#2d3435",
+                    "surface": "#f9f9f9",
+                    "secondary-fixed-dim": "#c6d6e7",
+                    "on-error": "#fff7f6",
+                    "surface-container-highest": "#dde4e5",
+                    "primary-dim": "#145490",
+                    "on-surface-variant": "#5a6061",
+                    "inverse-on-surface": "#9c9d9d",
+                    "on-error-container": "#752121",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-fixed-variant": "#4d5d6b",
+                    "surface-tint": "#27609d",
+                    "surface-bright": "#f9f9f9",
+                    "secondary-fixed": "#d4e5f5",
+                    "on-primary-fixed-variant": "#235d9a",
+                    "on-tertiary-fixed-variant": "#555873",
+                    "surface-container-low": "#f2f4f4",
+                    "inverse-surface": "#0c0f0f",
+                    "tertiary-container": "#dcddfe",
+                    "secondary-container": "#d4e5f5",
+                    "tertiary": "#5b5d78",
+                    "outline-variant": "#adb3b4",
+                    "outline": "#757c7d",
+                    "surface-variant": "#dde4e5",
+                    "surface-container-high": "#e4e9ea",
+                    "primary": "#27609d",
+                    "on-tertiary-container": "#4c4e69",
+                    "on-secondary": "#f5f9ff",
+                    "error-container": "#fe8983",
+                    "on-primary": "#f6f7ff",
+                    "tertiary-dim": "#4f516c",
+                    "background": "#f9f9f9",
+                    "tertiary-fixed": "#dcddfe",
+                    "inverse-primary": "#89bcff",
+                    "error": "#9f403d",
+                    "error-dim": "#4e0309",
+                    "secondary-dim": "#455562",
+                    "on-primary-container": "#135390",
+                    "tertiary-fixed-dim": "#cecfef",
+                    "on-secondary-container": "#445461",
+                    "surface-container": "#ebeeef",
+                    "primary-fixed": "#d3e4ff",
+                    "on-secondary-fixed": "#31414e",
+                    "on-surface": "#2d3435",
+                    "primary-container": "#d3e4ff",
+                    "on-tertiary-fixed": "#393c55",
+                    "primary-fixed-dim": "#bbd6ff",
+                    "secondary": "#51616f",
+                    "on-primary-fixed": "#004075",
+                    "on-tertiary": "#fbf8ff",
+                    "surface-dim": "#d4dbdd"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+                /* Responsividade topo e detalhes */
+        .topbar-scroll {
+            display: flex;
+            flex-nowrap: nowrap;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        #breadcrumb-detalhe {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            flex-wrap: nowrap;
+            white-space: nowrap;
+        }
+        @media (max-width: 900px) {
+            .topbar-scroll {
+                flex-wrap: wrap;
+                align-items: center;
+                row-gap: 0.5rem;
+            }
+            #breadcrumb-detalhe {
+                flex-wrap: wrap;
+                white-space: normal;
+                word-break: break-word;
+            }
+        }
+        @media (max-width: 640px) {
+            nav.fixed {
+                height: auto;
+                min-height: 70px;
+            }
+            .topbar-scroll {
+                padding-top: 0.75rem;
+                padding-bottom: 0.75rem;
+            }
+        }
+                @media (max-width: 640px) {
+                    .obra-details-grid {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 2rem;
+                    }
+                    .obra-details-grid > section {
+                        width: 100% !important;
+                        max-width: 100vw;
+                    }
+                    .obra-details-grid .grid {
+                        grid-template-columns: 1fr !important;
+                    }
+                    .obra-details-grid h1 {
+                        font-size: 2rem !important;
+                        word-break: break-word;
+                    }
+                }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .archive-glass {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+        }
+    </style>
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 archive-glass shadow-sm flex items-start px-4 sm:px-6 py-2 sm:py-3">
+    <div class="topbar-scroll flex flex-wrap items-center gap-2 w-full">
+        <a href="index.html" class="flex items-center px-2 sm:px-3 py-2 rounded bg-primary text-white text-xs font-bold uppercase tracking-widest hover:bg-black transition-colors shadow-sm flex-shrink-0">
+            <span class="material-symbols-outlined text-base mr-1 sm:mr-2 flex-shrink-0" style="vertical-align:middle;">home</span>
+            <span class="hidden sm:inline">Início</span>
+        </a>
+        <nav class="flex flex-wrap items-center text-[10px] text-on-surface-variant font-label uppercase tracking-[0.12em]" aria-label="breadcrumb">
+            <span id="breadcrumb-detalhe" class="flex flex-wrap items-center gap-1"></span>
+        </nav>
+    </div>
+</nav>
+<main class="pt-36 sm:pt-48 pb-16 px-4 sm:px-8 max-w-7xl mx-auto">
+<div class="obra-details-grid flex flex-col lg:flex-row gap-8 items-start">
+    <!-- Imagem -->
+    <section class="w-full lg:w-7/12">
+        <div class="rounded-xl overflow-hidden bg-surface-container-low shadow-sm flex items-center justify-center">
+            <img id="obra-img" class="max-w-full h-auto object-contain transition-all duration-700 ease-in-out" alt="Imagem da obra" src="" />
+        </div>
+    </section>
+    <!-- Detalhes -->
+    <section class="w-full lg:w-5/12 space-y-8">
+        <header class="space-y-4">
+<div class="flex items-center justify-between">
+<span id="obra-registro" class="text-xs font-label text-on-surface-variant tracking-widest font-semibold"></span>
+<div id="obra-status" class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-[10px] font-label uppercase font-bold tracking-tighter"></div>
+</div>
+<h1 class="text-4xl lg:text-5xl font-headline font-bold text-on-surface tracking-tight leading-tight" style="">
+                        <span id="obra-titulo"></span>
+                    </h1>
+</header>
+<div class="space-y-8">
+<!-- Taxonomy (Icons removed as requested) -->
+<div class="grid grid-cols-2 gap-y-6">
+<div>
+<p class="text-[10px] font-label text-on-surface-variant uppercase tracking-widest mb-1" style="">Núcleo Temático</p>
+<span class="inline-block bg-surface-container-high px-2 py-1 text-xs font-semibold rounded text-on-surface" style="">Industrialização Pioneira</span>
+<span id="obra-nucleo" class="inline-block bg-surface-container-high px-2 py-1 text-xs font-semibold rounded text-on-surface"></span>
+</div>
+<div>
+<p class="text-[10px] font-label text-on-surface-variant uppercase tracking-widest mb-1" style="">Categoria</p>
+<p class="text-sm font-semibold text-on-surface" style="">Equipamento de Produção</p>
+<p id="obra-categoria" class="text-sm font-semibold text-on-surface"></p>
+</div>
+<div>
+<p class="text-[10px] font-label text-on-surface-variant uppercase tracking-widest mb-1" style="">Data / Período</p>
+<p class="text-sm font-semibold text-on-surface" style="">Circa 1924 – 1930</p>
+<p id="obra-data" class="text-sm font-semibold text-on-surface"></p>
+</div>
+<div>
+<p class="text-[10px] font-label text-on-surface-variant uppercase tracking-widest mb-1" style="">Origem</p>
+<p class="text-sm font-semibold text-on-surface" style="">Baden-Württemberg, Alemanha</p>
+<p id="obra-origem" class="text-sm font-semibold text-on-surface"></p>
+</div>
+</div>
+<!-- Description -->
+<div class="bg-surface-container-low p-6 rounded-xl space-y-4">
+<h3 class="text-[10px] font-label text-primary uppercase tracking-[0.2em] font-bold" style="">Descrição Objetiva</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed font-body" style="">
+<span id="obra-descricao" class="text-on-surface-variant text-sm leading-relaxed font-body"></span>
+                        </p>
+</div>
+<!-- Material & Visuals -->
+<div class="space-y-6">
+<div>
+<h3 class="text-[10px] font-label text-on-surface-variant uppercase tracking-widest mb-3 border-b border-outline-variant/20 pb-1" style="">Composição Material</h3>
+<ul class="text-sm space-y-1 text-on-surface font-medium">
+<li id="obra-material" class=""></li>
+</ul>
+</div>
+<div>
+<h3 class="text-[10px] font-label text-on-surface-variant uppercase tracking-widest mb-3 border-b border-outline-variant/20 pb-1" style="">Características Visuais</h3>
+<p class="text-sm text-on-surface leading-relaxed" style="">
+<span id="obra-caracteristicas" class="text-sm text-on-surface leading-relaxed"></span>
+                            </p>
+</div>
+</div>
+</div>
+<!-- Related Items Section removed as requested -->
+</main>
+<!-- Footer -->
+<footer class="w-full border-t border-gray-100 bg-white">
+    <div class="flex flex-col items-center justify-center px-6 py-8 max-w-7xl mx-auto w-full">
+        <img src="https://cdn.prod.website-files.com/66d09af91f7a821e8941f56e/674dbfa531dc25d89113d138_logo.svg" alt="Logo Acervo Gross" style="height: 32px; width: auto; margin-bottom: 8px; opacity: 0.7;">
+        <div class="text-[11px] uppercase tracking-widest text-gray-400">
+            © 2026 Acervo Laboratório Gross.
+        </div>
+    </div>
+</footer>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('id');
+    if (!id) {
+        document.body.innerHTML = '<p>ID not found</p>';
+        return;
+    }
+    fetch('LABORATÓRIO GROSS _ ACERVO.csv')
+        .then(response => response.text())
+        .then(csvText => {
+            const parsed = Papa.parse(csvText, { header: true });
+            const data = parsed.data;
+            const row = data.find(r => r['ID Registro'] === id);
+            if (!row) {
+                document.body.innerHTML = '<p>Item not found</p>';
+                return;
+            }
+                        // Imagem
+                        const img = document.getElementById('obra-img');
+                        if (img) {
+                            img.src = row['Link da imagem'];
+                            img.alt = row['Título padronizado'];
+                        }
+                        // Registro
+                        const registro = document.getElementById('obra-registro');
+                        if (registro) registro.textContent = `REGISTRO: ${row['ID Registro']}`;
+                        // Status (se houver)
+                        const status = document.getElementById('obra-status');
+                        if (status) status.textContent = row['Status'] || '';
+                        // Título
+                        const titulo = document.getElementById('obra-titulo');
+                        if (titulo) titulo.textContent = row['Título padronizado'];
+                        // Núcleo Temático
+                        const nucleo = document.getElementById('obra-nucleo');
+                        if (nucleo) nucleo.textContent = row['Núcleo temático'];
+                        // Categoria
+                        const categoria = document.getElementById('obra-categoria');
+                        if (categoria) categoria.textContent = row['Categoria'];
+                        // Data
+                        const dataObra = document.getElementById('obra-data');
+                        if (dataObra) dataObra.textContent = row['Data / período'];
+                        // Origem
+                        const origem = document.getElementById('obra-origem');
+                        if (origem) origem.textContent = row['Origem'] || '';
+                        // Descrição
+                        const descricao = document.getElementById('obra-descricao');
+                        if (descricao) descricao.textContent = row['Descrição objetiva'];
+                        // Material
+                        const material = document.getElementById('obra-material');
+                        if (material) material.textContent = `• ${row['Material / suporte']}`;
+                        // Características
+                        const caracteristicas = document.getElementById('obra-caracteristicas');
+                        if (caracteristicas) caracteristicas.textContent = row['Características visuais'];
+                        // Breadcrumb
+                        const breadcrumb = document.getElementById('breadcrumb-detalhe');
+                        if (breadcrumb) {
+                                breadcrumb.innerHTML = `
+                                    <a class="hover:text-primary transition-colors mr-1 text-[10px]" href="index.html">Acervo</a>
+                                    <span class="material-symbols-outlined mx-0.5 align-middle" style="font-size:12px;line-height:1;">chevron_right</span>
+                                    <a class="hover:text-primary transition-colors mr-1 text-[10px]" href="#">${row['Núcleo temático']}</a>
+                                    <span class="material-symbols-outlined mx-0.5 align-middle" style="font-size:12px;line-height:1;">chevron_right</span>
+                                    <span class="text-on-surface font-semibold text-[10px]">${row['Título padronizado']}</span>
+                                `;
+                        }
+        })
+        .catch(error => console.error('Error loading CSV:', error));
+});
+</script>
+</body></html>
