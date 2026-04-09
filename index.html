@@ -195,11 +195,11 @@ select {
 </div>
 <!-- Pagination System -->
 <div class="mt-20 flex flex-col items-center border-t border-gray-100 pt-10">
-<div class="flex items-center gap-8 mb-6">
+<div class="flex items-center justify-center gap-2 sm:gap-8 mb-6 w-full px-2 sm:px-0">
 <button id="prev-btn" class="flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 text-gray-400 hover:border-primary hover:text-primary transition-all disabled:opacity-50" disabled>
 <span class="material-symbols-outlined text-xl">chevron_left</span>
 </button>
-<div class="flex items-center gap-2 font-headline" id="page-buttons">
+<div class="flex items-center gap-1 sm:gap-2 font-headline min-w-0" id="page-buttons">
 <!-- Page buttons will be inserted here -->
 </div>
 <button id="next-btn" class="flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 text-gray-400 hover:border-primary hover:text-primary transition-all disabled:opacity-50" disabled>
@@ -333,14 +333,47 @@ function updatePagination() {
     const pageButtons = document.getElementById('page-buttons');
     pageButtons.innerHTML = '';
 
-    if (filteredData.length > 0) {
-        for (let i = 1; i <= totalPages; i++) {
-            const btn = document.createElement('button');
-            btn.className = `w-10 h-10 flex items-center justify-center rounded-lg text-sm font-semibold transition-colors ${i === currentPage ? 'bg-primary text-white' : 'text-gray-500 hover:bg-gray-50'}`;
-            btn.textContent = i;
-            btn.addEventListener('click', () => showPage(i));
-            pageButtons.appendChild(btn);
+    function getVisiblePages(current, total, maxButtons) {
+        if (total <= maxButtons) {
+            return Array.from({ length: total }, (_, idx) => idx + 1);
         }
+
+        const pages = new Set([1, total, current]);
+        let offset = 1;
+
+        while (pages.size < maxButtons) {
+            const left = current - offset;
+            const right = current + offset;
+
+            if (left > 1) pages.add(left);
+            if (pages.size >= maxButtons) break;
+            if (right < total) pages.add(right);
+
+            if (left <= 1 && right >= total) break;
+            offset += 1;
+        }
+
+        return Array.from(pages).sort((a, b) => a - b);
+    }
+
+    if (filteredData.length > 0) {
+        const isMobile = window.matchMedia('(max-width: 640px)').matches;
+        const visiblePages = getVisiblePages(currentPage, totalPages, isMobile ? 5 : 9);
+
+        visiblePages.forEach((pageNumber, index) => {
+            if (index > 0 && pageNumber - visiblePages[index - 1] > 1) {
+                const dots = document.createElement('span');
+                dots.className = 'w-7 h-10 flex items-center justify-center text-gray-400 text-sm';
+                dots.textContent = '...';
+                pageButtons.appendChild(dots);
+            }
+
+            const btn = document.createElement('button');
+            btn.className = `w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-lg text-sm font-semibold transition-colors ${pageNumber === currentPage ? 'bg-primary text-white' : 'text-gray-500 hover:bg-gray-50'}`;
+            btn.textContent = pageNumber;
+            btn.addEventListener('click', () => showPage(pageNumber));
+            pageButtons.appendChild(btn);
+        });
     }
 
     document.getElementById('prev-btn').disabled = currentPage === 1 || filteredData.length === 0;
