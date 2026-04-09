@@ -83,7 +83,7 @@
                 /* Responsividade topo e detalhes */
         .topbar-scroll {
             display: flex;
-            flex-nowrap: nowrap;
+            flex-wrap: nowrap;
             align-items: center;
             gap: 0.5rem;
         }
@@ -169,7 +169,7 @@
 <span id="obra-registro" class="text-xs font-label text-on-surface-variant tracking-widest font-semibold"></span>
 <div id="obra-status" class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-[10px] font-label uppercase font-bold tracking-tighter"></div>
 </div>
-<h1 class="text-4xl lg:text-5xl font-headline font-bold text-on-surface tracking-tight leading-tight" style="">
+<h1 class="text-4xl lg:text-5xl font-headline font-bold text-on-surface tracking-tight leading-tight">
                         <span id="obra-titulo"></span>
                     </h1>
 </header>
@@ -177,44 +177,40 @@
 <!-- Taxonomy (Icons removed as requested) -->
 <div class="grid grid-cols-2 gap-y-6">
 <div>
-<p class="text-[10px] font-label text-on-surface-variant uppercase tracking-widest mb-1" style="">Núcleo Temático</p>
-<span class="inline-block bg-surface-container-high px-2 py-1 text-xs font-semibold rounded text-on-surface" style="">Industrialização Pioneira</span>
+<p class="text-[10px] font-label text-on-surface-variant uppercase tracking-widest mb-1">Núcleo Temático</p>
 <span id="obra-nucleo" class="inline-block bg-surface-container-high px-2 py-1 text-xs font-semibold rounded text-on-surface"></span>
 </div>
 <div>
-<p class="text-[10px] font-label text-on-surface-variant uppercase tracking-widest mb-1" style="">Categoria</p>
-<p class="text-sm font-semibold text-on-surface" style="">Equipamento de Produção</p>
+<p class="text-[10px] font-label text-on-surface-variant uppercase tracking-widest mb-1">Categoria</p>
 <p id="obra-categoria" class="text-sm font-semibold text-on-surface"></p>
 </div>
 <div>
-<p class="text-[10px] font-label text-on-surface-variant uppercase tracking-widest mb-1" style="">Data / Período</p>
-<p class="text-sm font-semibold text-on-surface" style="">Circa 1924 – 1930</p>
+<p class="text-[10px] font-label text-on-surface-variant uppercase tracking-widest mb-1">Data / Período</p>
 <p id="obra-data" class="text-sm font-semibold text-on-surface"></p>
 </div>
 <div>
-<p class="text-[10px] font-label text-on-surface-variant uppercase tracking-widest mb-1" style="">Origem</p>
-<p class="text-sm font-semibold text-on-surface" style="">Baden-Württemberg, Alemanha</p>
+<p class="text-[10px] font-label text-on-surface-variant uppercase tracking-widest mb-1">Origem</p>
 <p id="obra-origem" class="text-sm font-semibold text-on-surface"></p>
 </div>
 </div>
 <!-- Description -->
 <div class="bg-surface-container-low p-6 rounded-xl space-y-4">
-<h3 class="text-[10px] font-label text-primary uppercase tracking-[0.2em] font-bold" style="">Descrição Objetiva</h3>
-<p class="text-on-surface-variant text-sm leading-relaxed font-body" style="">
+<h3 class="text-[10px] font-label text-primary uppercase tracking-[0.2em] font-bold">Descrição Objetiva</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed font-body">
 <span id="obra-descricao" class="text-on-surface-variant text-sm leading-relaxed font-body"></span>
                         </p>
 </div>
 <!-- Material & Visuals -->
 <div class="space-y-6">
 <div>
-<h3 class="text-[10px] font-label text-on-surface-variant uppercase tracking-widest mb-3 border-b border-outline-variant/20 pb-1" style="">Composição Material</h3>
+<h3 class="text-[10px] font-label text-on-surface-variant uppercase tracking-widest mb-3 border-b border-outline-variant/20 pb-1">Composição Material</h3>
 <ul class="text-sm space-y-1 text-on-surface font-medium">
-<li id="obra-material" class=""></li>
+<li id="obra-material"></li>
 </ul>
 </div>
 <div>
-<h3 class="text-[10px] font-label text-on-surface-variant uppercase tracking-widest mb-3 border-b border-outline-variant/20 pb-1" style="">Características Visuais</h3>
-<p class="text-sm text-on-surface leading-relaxed" style="">
+<h3 class="text-[10px] font-label text-on-surface-variant uppercase tracking-widest mb-3 border-b border-outline-variant/20 pb-1">Características Visuais</h3>
+<p class="text-sm text-on-surface leading-relaxed">
 <span id="obra-caracteristicas" class="text-sm text-on-surface leading-relaxed"></span>
                             </p>
 </div>
@@ -234,7 +230,7 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get('id');
+    const id = (urlParams.get('id') || '').trim();
     if (!id) {
         document.body.innerHTML = '<p>ID not found</p>';
         return;
@@ -244,7 +240,8 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(csvText => {
             const parsed = Papa.parse(csvText, { header: true });
             const data = parsed.data;
-            const row = data.find(r => r['ID Registro'] === id);
+            const value = (v) => (v ?? '').toString().trim();
+            const row = data.find(r => value(r['ID Registro']) === id);
             if (!row) {
                 document.body.innerHTML = '<p>Item not found</p>';
                 return;
@@ -252,48 +249,51 @@ document.addEventListener('DOMContentLoaded', function() {
                         // Imagem
                         const img = document.getElementById('obra-img');
                         if (img) {
-                            img.src = row['Link da imagem'];
-                            img.alt = row['Título padronizado'];
+                            img.src = value(row['Link da imagem']);
+                            img.alt = value(row['Título padronizado']);
                         }
                         // Registro
                         const registro = document.getElementById('obra-registro');
-                        if (registro) registro.textContent = `REGISTRO: ${row['ID Registro']}`;
+                        if (registro) registro.textContent = `REGISTRO: ${value(row['ID Registro'])}`;
                         // Status (se houver)
                         const status = document.getElementById('obra-status');
-                        if (status) status.textContent = row['Status'] || '';
+                        if (status) status.textContent = value(row['Status']);
                         // Título
                         const titulo = document.getElementById('obra-titulo');
-                        if (titulo) titulo.textContent = row['Título padronizado'];
+                        if (titulo) titulo.textContent = value(row['Título padronizado']);
                         // Núcleo Temático
                         const nucleo = document.getElementById('obra-nucleo');
-                        if (nucleo) nucleo.textContent = row['Núcleo temático'];
+                        if (nucleo) nucleo.textContent = value(row['Núcleo temático']);
                         // Categoria
                         const categoria = document.getElementById('obra-categoria');
-                        if (categoria) categoria.textContent = row['Categoria'];
+                        if (categoria) categoria.textContent = value(row['Categoria']);
                         // Data
                         const dataObra = document.getElementById('obra-data');
-                        if (dataObra) dataObra.textContent = row['Data / período'];
+                        if (dataObra) dataObra.textContent = value(row['Data / período']);
                         // Origem
                         const origem = document.getElementById('obra-origem');
-                        if (origem) origem.textContent = row['Origem'] || '';
+                        if (origem) origem.textContent = value(row['Origem']);
                         // Descrição
                         const descricao = document.getElementById('obra-descricao');
-                        if (descricao) descricao.textContent = row['Descrição objetiva'];
+                        if (descricao) descricao.textContent = value(row['Descrição objetiva']);
                         // Material
                         const material = document.getElementById('obra-material');
-                        if (material) material.textContent = `• ${row['Material / suporte']}`;
+                        if (material) {
+                            const materialValue = value(row['Material / suporte']);
+                            material.textContent = materialValue ? `• ${materialValue}` : '';
+                        }
                         // Características
                         const caracteristicas = document.getElementById('obra-caracteristicas');
-                        if (caracteristicas) caracteristicas.textContent = row['Características visuais'];
+                        if (caracteristicas) caracteristicas.textContent = value(row['Características visuais']);
                         // Breadcrumb
                         const breadcrumb = document.getElementById('breadcrumb-detalhe');
                         if (breadcrumb) {
                                 breadcrumb.innerHTML = `
                                     <a class="hover:text-primary transition-colors mr-1 text-[10px]" href="index.html">Acervo</a>
                                     <span class="material-symbols-outlined mx-0.5 align-middle" style="font-size:12px;line-height:1;">chevron_right</span>
-                                    <a class="hover:text-primary transition-colors mr-1 text-[10px]" href="#">${row['Núcleo temático']}</a>
+                                    <a class="hover:text-primary transition-colors mr-1 text-[10px]" href="#">${value(row['Núcleo temático'])}</a>
                                     <span class="material-symbols-outlined mx-0.5 align-middle" style="font-size:12px;line-height:1;">chevron_right</span>
-                                    <span class="text-on-surface font-semibold text-[10px]">${row['Título padronizado']}</span>
+                                    <span class="text-on-surface font-semibold text-[10px]">${value(row['Título padronizado'])}</span>
                                 `;
                         }
         })
